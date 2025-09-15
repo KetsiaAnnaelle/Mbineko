@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-primary: 34 139 34; /* #228B22 */
+  }
+  html, body, #root {
+    height: 100%;
+  }
+  body {
+    font-family: "Lato", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    background-color: #ffffff;
+    color: #171717;
+  }
+  h1, h2, h3, h4 {
+    font-family: "Oswald", "Serial Semi-Condensed", sans-serif;
+  }
+}
+
+/* Typography scale: titles, subtitles, body */
+:root {
+  --title-size: 40px; /* same across titles */
+  --subtitle-size: 22px; /* consistent subtitle */
+  --body-size: 16px; /* paragraphs */
+}
+
+.title { font-size: var(--title-size); line-height: 1.1; }
+.subtitle { font-size: var(--subtitle-size); line-height: 1.25; }
+.body-text { font-size: var(--body-size); line-height: 1.6; }
+
+/* Animations */
+@keyframes slideInDown {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slideInDown { animation: slideInDown .6s cubic-bezier(.2,.7,.3,1) both; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal { animation: fadeUp .7s ease-out both; }
+
+/* Staggered animation delays for impact cards */
+.delay-0 { animation-delay: 0ms; }
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
