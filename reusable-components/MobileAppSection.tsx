@@ -13,7 +13,7 @@ const MobileAppSection = () => {
             transition={{ duration: 0.6 }}
             className="text-3xl md:text-4xl font-bold text-green-900 mb-4"
           >
-            APPLICATION MOBILE MBINEKO
+            La puissance de MBINEKO dans votre poche
           </motion.h2>
           <motion.div 
             initial={{ width: 0 }}
@@ -49,11 +49,12 @@ const MobileAppSection = () => {
               >
                 <div className="relative bg-gray-800 rounded-[40px] p-3 shadow-2xl">
                   <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-5 bg-gray-800 rounded-b-lg z-20"></div>
-                  <div className="overflow-hidden rounded-[32px] border-2 border-gray-700">
+                  <div className="overflow-hidden rounded-[32px] border border-gray-700">
                     <img 
                       src="/assets/img/maquette mobile.PNG" 
-                      alt="Application mobile MBINEKO" 
-                      className="w-full h-auto"
+                      alt="Interface professionnelle de l'application MBINEKO" 
+                      className="w-full h-auto object-cover"
+                      style={{ minHeight: '500px' }}
                     />
                   </div>
                 </div>

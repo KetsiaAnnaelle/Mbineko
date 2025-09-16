@@ -118,7 +118,7 @@ const HeroSection = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.5 }}
-                    className="mt-12 md:mt-20 bg-white rounded-2xl shadow-lg p-6 md:p-8 relative overflow-hidden mb-10"
+                    className="mt-12 md:mt-20 bg-white rounded-2xl shadow-lg p-6 md:p-8 relative overflow-hidden mb-5"
                 >
                     {/* Fond décoratif */}
                     <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-green-100 opacity-50"></div>
