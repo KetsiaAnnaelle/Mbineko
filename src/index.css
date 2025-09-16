@@ -15,6 +15,10 @@
   h1, h2, h3, h4 {
     font-family: "Oswald", "Serial Semi-Condensed", sans-serif;
   }
+
+  Button{
+    border-radius: 9999px; /* fully rounded */
+  }
 }
 
 /* Typography scale: titles, subtitles, body */
