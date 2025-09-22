@@ -1,4 +1,4 @@
-import React from 'react';
+//import React from 'react';
 import Header from '../../reusable-components/Layout/Header';
 import HeroSection from '../../reusable-components/virtual-visite/HeroSection';
 import ForestSelection from '../../reusable-components/virtual-visite/ForestSelection';

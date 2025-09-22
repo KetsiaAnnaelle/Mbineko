@@ -1,5 +1,3 @@
-
-
 import ForestStats from '../sections/ForestStats';
 import CTASection from '../sections/CTASection';
 import Header from '../../Layout/Header';
@@ -16,7 +14,9 @@ export default function ForestDetailPage({ forest, onBack }: ForestDetailPagePro
   return (
     <div className="min-h-screen">
       <Header showBackButton onBack={onBack} />
-      <ForestHero forest={forest} />
+      <div className="pt-16 md:pt-20 lg:pt-24">
+        <ForestHero forest={forest}/>
+      </div>
       <ForestStats forest={forest} />
       <CTASection />
       <Footer />

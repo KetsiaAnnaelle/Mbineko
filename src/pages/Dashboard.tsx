@@ -1,5 +1,4 @@
-import React from 'react';
-import Navbar from '../../reusable-components/Layout/Navbar';
+// import React from 'react';
 import LineChart from '../../reusable-components/dashboard/LineChart';
 import BarChart from '../../reusable-components/dashboard/BarChart';
 import StatsCard from '../../reusable-components/dashboard/StatsCard';
@@ -7,6 +6,7 @@ import CircularProgress from '../../reusable-components/dashboard/CircularProgre
 import DonutChart from '../../reusable-components/dashboard/DonutChart';
 import AlertsPanel from '../../reusable-components/dashboard/AlertsPanel';
 import MapSection from '../../reusable-components/dashboard/MapSection';
+import Header from '../../reusable-components/Layout/Header';
 
 function Dashboard() {
   const deforestationData = [10, 15, 25, 30, 45, 55, 70, 85, 90, 120];
@@ -21,7 +21,7 @@ function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+      <Header />
       
       <div className="flex gap-6 p-6 mt-20">
         {/* Main Content */}

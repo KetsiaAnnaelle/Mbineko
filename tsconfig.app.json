@@ -30,5 +30,5 @@
       ]
     }
   },
-  "include": ["src", "reusable-components/Forest/pages/ForestPage.tsx", "reusable-components/Forest/pages/ForestDetailPage.tsx"]
+  "include": ["src", "reusable-components/Forest/pages/ForestPage.tsx", "reusable-components/Forest/pages/ForestDetailPage.tsx", "src/pages/StatistiqueDetails.tsx"]
 }

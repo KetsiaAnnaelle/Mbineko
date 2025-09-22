@@ -18,7 +18,9 @@ export default function ForestPage({ onForestSelect }: ForestPageProps) {
   return (
     <div className="min-h-screen">
       <Header />
-      <Hero />
+      <div className="pt-16 md:pt-20 lg:pt-24">
+        <Hero />
+      </div>
       <ForestsGrid forests={forests} onForestSelect={onForestSelect} />
       <FeaturesSection features={features} />
       <CTASection />

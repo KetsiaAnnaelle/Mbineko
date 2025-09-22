@@ -9,6 +9,7 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import ForestMonitoringPage from './pages/ForestMonitoringPage';
 import VirtualVisite from './pages/VirtualVisite';
+import StatistiqueDetails from './pages/StatistiqueDetails';
 
 
 
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
   { path: "/register", element: <RegisterPage /> },
   { path: "/login", element: <LoginPage /> },
     { path: "/forests", element: <ForestMonitoringPage /> },
+    { path: "/forests/statistics", element: <StatistiqueDetails /> },
     { path: "/visite", element: <VirtualVisite /> },
 ]);
 
