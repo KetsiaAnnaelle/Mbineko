@@ -1,13 +1,13 @@
 import React from "react";
-import Navbar from '../../reusable-components/Navbar';
-import HeroSection from '../../reusable-components/HeroSection';
-import FunctionnalitiesSection from '../../reusable-components/FunctionnalitiesSection';
-import ImpactsSection from '../../reusable-components/ImpactsSection';
-import Team from '../../reusable-components/Team';
-import About from '../../reusable-components/About';  
-import Contact from '../../reusable-components/Contact';  
-import MobileAppSection from '../../reusable-components/MobileAppSection';  
-import Footer from '../../reusable-components/Footer';  
+import Navbar from '../../reusable-components/Layout/Navbar';
+import HeroSection from '../../reusable-components/LandingPage/HeroSection';
+import FunctionnalitiesSection from '../../reusable-components/LandingPage/FunctionnalitiesSection';
+import ImpactsSection from '../../reusable-components/LandingPage/ImpactsSection';
+import Team from '../../reusable-components/LandingPage/Team';
+import About from '../../reusable-components/LandingPage/About';  
+import Contact from '../../reusable-components/LandingPage/Contact';  
+import MobileAppSection from '../../reusable-components/LandingPage/MobileAppSection';  
+import Footer from '../../reusable-components/Layout/Footer';  
 
 export default function Home() {
   return (

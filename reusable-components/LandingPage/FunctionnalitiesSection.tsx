@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { CheckCircle, Leaf, TreePine, Satellite, BarChart3, Download, Shield, MapPin } from "lucide-react";
+import { Satellite, Download, Shield, MapPin } from "lucide-react";
 
 const FunctionnalitiesSection = () => {
   const features = [

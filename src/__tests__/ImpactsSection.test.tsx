@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import ImpactsSection from '../../reusable-components/ImpactsSection'
+import ImpactsSection from '../../reusable-components/LandingPage/ImpactsSection'
 
 describe('ImpactsSection', () => {
   it('renders impacts header and at least one ODD image', () => {

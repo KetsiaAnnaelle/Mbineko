@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Smartphone, Download, QrCode, Shield, BarChart3, MapPin } from "lucide-react";
+import {  QrCode, Shield, BarChart3, MapPin } from "lucide-react";
 
 const MobileAppSection = () => {
   return (

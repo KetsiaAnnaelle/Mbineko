@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import Navbar from '../../reusable-components/Navbar'
+import Navbar from '../../reusable-components/Layout/Navbar'
 
 describe('Navbar', () => {
   it('renders logo and menu items', () => {

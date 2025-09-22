@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import HeroSection from '../../reusable-components/HeroSection'
+import HeroSection from '../../reusable-components/LandingPage/HeroSection'
 
 describe('HeroSection', () => {
   it('renders title and CTAs', () => {
