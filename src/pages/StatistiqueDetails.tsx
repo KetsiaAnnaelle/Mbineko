@@ -10,12 +10,16 @@ interface ForestDetailPageProps {
   onBack: () => void;
 }
 
-export default function StatistiqueDetails({ forest, onBack }: ForestDetailPageProps) {
+// export default function StatistiqueDetails({ forest, onBack }: ForestDetailPageProps) {
+export default function StatistiqueDetails({ forest }: ForestDetailPageProps) {
   return (
     <div className="min-h-screen">
-      <Header showBackButton onBack={onBack} />
+      {/* <Header showBackButton onBack={onBack} /> */}
+     
+      <Header />
       <div className="pt-16 md:pt-20 lg:pt-24">
         <ForestHero forest={forest}/>
+        {/* <ForestHero/> */}
       </div>
       <ForestDashboard />
       <CTASection />

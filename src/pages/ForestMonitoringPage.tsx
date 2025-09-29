@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import HomePage from '../../reusable-components/Forest/pages/ForestPage';
 import ForestDetailPage from '../../reusable-components/Forest/pages/ForestDetailPage';
 import type { Forest } from '@/types/forest';
+import ForestPage from '../../reusable-components/Forest/pages/ForestPage';
 
 export default function ForestMonitoringPage() {
   const [selectedForest, setSelectedForest] = useState<Forest | null>(null);
@@ -22,7 +22,7 @@ export default function ForestMonitoringPage() {
           onBack={handleBackToHome} 
         />
       ) : (
-        <HomePage onForestSelect={handleForestSelect} />
+        <ForestPage onForestSelect={handleForestSelect} />
       )}
     </div>
   );

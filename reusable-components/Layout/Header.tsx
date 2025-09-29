@@ -42,7 +42,7 @@ export default function Header() {
                 transition={{ duration: 0.8 }}
                 className="flex items-center gap-3"
               >
-                <img src="/assets/img/logo2.png" alt="logo" className="h-12" href="/forests"/>
+                <img src="/assets/img/logo2.png" alt="logo" className="h-12"/>
               </motion.div>
 
               {/* Navigation Desktop */}
@@ -101,7 +101,7 @@ export default function Header() {
                 </DropdownMenu>
 
                 {/* Dark mode toggle */}
-                <Button
+                {/* <Button
                   variant="ghost"
                   size="icon"
                   onClick={toggleDarkMode}
@@ -109,7 +109,9 @@ export default function Header() {
                 >
                   {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
                   <span className="sr-only">Basculer le mode sombre</span>
-                </Button>
+                </Button> */}
+
+                
 
                 {/* CTA Button */}
                 <Link to="/register"  >

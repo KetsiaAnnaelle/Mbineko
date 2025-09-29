@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 
 export default function CTASection() {
   return (
-    <section className="bg-gradient-to-r from-green-600 to-green-700 py-16 text-white">
+    <section className="bg-gradient-to-r from-[#228B22] to-green-700 py-16 text-white">
       <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl md:text-4xl font-bold mb-6">
           Rejoignez la Révolution de la Surveillance Forestière

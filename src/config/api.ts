@@ -27,6 +27,8 @@ export const API_CONFIG = {
       LOGIN: '/login/',
       REGISTER: '/register/',
       REFRESH: '/auth/refresh/',
+      FORGOT_PASSWORD: '/password-reset/',
+      RESET_PASSWORD_CONFIRM: '/password-reset-confirm/',
       LOGOUT: '/auth/logout/',
     },
     FORESTS: '/forests/',

@@ -1,5 +1,5 @@
-import React from 'react';
-import { MapPin, Eye, Heart, Share, Download, FileText, Thermometer, Droplets, Leaf, TreePine } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { MapPin, Download, FileText, Thermometer, Droplets, Leaf, TreePine } from 'lucide-react';
 import { Link, useLocation } from 'react-router';
 
 // Mock data for demonstration
@@ -13,10 +13,17 @@ const mockForest = {
   humidity: 72
 };
 
-// Button component
-const Button = ({ children, variant = 'default', className = '', ...props }) => {
+// 🔹 Button component
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode;
+  variant?: 'default' | 'primary' | 'active' | 'destructive' | 'outline' | 'export';
+}
+
+const Button = ({ children, variant = 'default', className = '', ...props }: ButtonProps) => {
   const baseClasses = 'inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95';
-  const variants = {
+  
+  // Correction : Utiliser un type plus spécifique pour la clé
+  const variants: Record<NonNullable<ButtonProps['variant']>, string> = {
     default: 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 shadow-sm',
     primary: 'bg-green-500 text-white hover:bg-green-600 shadow-lg',
     active: 'bg-blue-500 text-white hover:bg-blue-600 shadow-lg',
@@ -25,15 +32,24 @@ const Button = ({ children, variant = 'default', className = '', ...props }) => 
     export: 'text-white font-semibold shadow-lg'
   };
   
+  const variantClass = variants[variant || 'default'];
+  
   return (
-    <button className={`${baseClasses} ${variants[variant]} ${className}`} {...props}>
+    <button className={`${baseClasses} ${variantClass} ${className}`} {...props}>
       {children}
     </button>
   );
 };
 
-// Progress Card Component
-const ProgressCard = ({ label, value, color, bgColor }) => {
+// 🔹 Progress Card Component
+interface ProgressCardProps {
+  label: string;
+  value: number;
+  color: string;
+  bgColor: string;
+}
+
+const ProgressCard = ({ label, value, color, bgColor }: ProgressCardProps) => {
   return (
     <div className="flex items-center justify-between py-3">
       <div className="flex items-center gap-3">
@@ -53,8 +69,16 @@ const ProgressCard = ({ label, value, color, bgColor }) => {
   );
 };
 
-// Stat Card Component
-const StatCard = ({ title, value, bgColor, textColor, icon: IconComponent }) => {
+// 🔹 Stat Card Component
+interface StatCardProps {
+  title: string;
+  value: string | number;
+  bgColor: string;
+  textColor: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
+const StatCard = ({ title, value, bgColor, textColor, icon: IconComponent }: StatCardProps) => {
   return (
     <div className={`${bgColor} rounded-2xl p-6 shadow-sm border-0 transition-all duration-200 hover:shadow-md hover:-translate-y-1`}>
       <div className="flex items-center justify-between">
@@ -70,7 +94,12 @@ const StatCard = ({ title, value, bgColor, textColor, icon: IconComponent }) => 
   );
 };
 
-export default function ForestStats({ forest = mockForest }) {
+// 🔹 ForestStats Component
+interface ForestStatsProps {
+  forest?: typeof mockForest;
+}
+
+export default function ForestStats({ forest = mockForest }: ForestStatsProps) {
   const location = useLocation();
   const isStatisticsPage = location.pathname.includes('/statistics');
 
@@ -93,7 +122,6 @@ export default function ForestStats({ forest = mockForest }) {
                     <MapPin className="h-4 w-4 mr-2" />
                     Vue d'ensemble
                   </Button>
-                
                 </Link>
                 
                 <Link to="/forests/statistics">

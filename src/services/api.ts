@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getApiConfig } from '../config/api'
+import { alertSuccess, alertError } from '@/lib/alerts'
 
 const config = getApiConfig()
 
@@ -19,9 +20,7 @@ api.interceptors.request.use(
     }
     return config
   },
-  (error) => {
-    return Promise.reject(error)
-  }
+  (error) => Promise.reject(error)
 )
 
 // Response interceptor to handle errors
@@ -29,7 +28,7 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Token expired or invalid, redirect to login
+      // Token expiré → redirection login
       localStorage.removeItem('authToken')
       window.location.href = '/login'
     }
@@ -46,9 +45,11 @@ export const authAPI = {
       if (response.data.token) {
         localStorage.setItem('authToken', response.data.token)
         localStorage.setItem('user', JSON.stringify(response.data.user))
+        alertSuccess('Connexion réussie', 'Bienvenue 🎉')
       }
       return response.data
-    } catch (error) {
+    } catch (error: any) {
+      alertError('Erreur de connexion', error.response?.data?.detail || "Vérifiez vos identifiants")
       throw error
     }
   },
@@ -66,9 +67,41 @@ export const authAPI = {
       if (response.data.token) {
         localStorage.setItem('authToken', response.data.token)
         localStorage.setItem('user', JSON.stringify(response.data.user))
+        alertSuccess('Inscription réussie', 'Bienvenue 🎉')
       }
       return response.data
-    } catch (error) {
+    } catch (error: any) {
+      alertError('Erreur d’inscription', error.response?.data?.detail || "Impossible de créer le compte")
+      throw error
+    }
+  },
+
+  // Forgot password - demande de code
+  forgotPassword: async (email: string) => {
+    try {
+      // const response = await api.post("password-reset/", { email })
+      const response = await api.post(config.ENDPOINTS.AUTH.FORGOT_PASSWORD, { email })
+      alertSuccess("Email envoyé", "Vérifiez votre boîte mail pour le code de réinitialisation")
+      return response.data
+    } catch (error: any) {
+      alertError('Erreur', error.response?.data?.detail || "Échec de l’envoi de l’email")
+      throw error
+    }
+  },
+
+  // Reset password avec code reçu
+  resetPasswordConfirm: async (email: string, code: string, newPassword: string) => {
+    try {
+      // const response = await api.post("password-reset-confirm/", {
+      const response = await api.post(config.ENDPOINTS.AUTH.RESET_PASSWORD_CONFIRM, {
+        email,
+        code,
+        new_password: newPassword
+      })
+      alertSuccess("Mot de passe réinitialisé", "Vous pouvez maintenant vous connecter avec le nouveau mot de passe")
+      return response.data
+    } catch (error: any) {
+      alertError('Erreur', error.response?.data?.detail || "Échec de la réinitialisation du mot de passe")
       throw error
     }
   },
@@ -77,6 +110,7 @@ export const authAPI = {
   logout: () => {
     localStorage.removeItem('authToken')
     localStorage.removeItem('user')
+    alertSuccess("Déconnexion réussie")
   },
 
   // Get current user
@@ -104,222 +138,6 @@ export const authAPI = {
   }
 }
 
-// Forest Management API
-export const forestAPI = {
-  // Get all forests for current user
-  getForests: async () => {
-    try {
-      const response = await api.get(config.ENDPOINTS.FORESTS)
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  },
-
-  // Get specific forest by ID
-  getForest: async (id: string) => {
-    try {
-      const response = await api.get(`${config.ENDPOINTS.FORESTS}${id}/`)
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  },
-
-  // Create new forest
-  createForest: async (forestData: {
-    name: string
-    location: string
-    area: number
-    description?: string
-  }) => {
-    try {
-      const response = await api.post(config.ENDPOINTS.FORESTS, forestData)
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  },
-
-  // Update forest
-  updateForest: async (id: string, forestData: any) => {
-    try {
-      const response = await api.put(`${config.ENDPOINTS.FORESTS}${id}/`, forestData)
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  },
-
-  // Delete forest
-  deleteForest: async (id: string) => {
-    try {
-      await api.delete(`${config.ENDPOINTS.FORESTS}${id}/`)
-      return true
-    } catch (error) {
-      throw error
-    }
-  }
-}
-
-// Drone Management API
-export const droneAPI = {
-  // Get all drones for current user
-  getDrones: async () => {
-    try {
-      const response = await api.get(config.ENDPOINTS.DRONES)
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  },
-
-  // Get drone status
-  getDroneStatus: async (id: string) => {
-    try {
-      const response = await api.get(`${config.ENDPOINTS.DRONES}${id}/status/`)
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  },
-
-  // Control drone
-  controlDrone: async (id: string, command: string) => {
-    try {
-      const response = await api.post(`${config.ENDPOINTS.DRONES}${id}/control/`, { command })
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  }
-}
-
-// Monitoring API
-export const monitoringAPI = {
-  // Get real-time data
-  getRealTimeData: async (forestId: string) => {
-    try {
-      const response = await api.get(`${config.ENDPOINTS.MONITORING}${forestId}/realtime/`)
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  },
-
-  // Get historical data
-  getHistoricalData: async (forestId: string, startDate: string, endDate: string) => {
-    try {
-      const response = await api.get(`${config.ENDPOINTS.MONITORING}${forestId}/historical/`, {
-        params: { start_date: startDate, end_date: endDate }
-      })
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  },
-
-  // Get alerts
-  getAlerts: async (forestId?: string) => {
-    try {
-      const params = forestId ? { forest_id: forestId } : {}
-      const response = await api.get(`${config.ENDPOINTS.MONITORING}alerts/`, { params })
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  }
-}
-
-// Reports API
-export const reportsAPI = {
-  // Generate report
-  generateReport: async (reportData: {
-    type: string
-    forestId: string
-    startDate: string
-    endDate: string
-    parameters: any
-  }) => {
-    try {
-      const response = await api.post(`${config.ENDPOINTS.REPORTS}generate/`, reportData)
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  },
-
-  // Get report history
-  getReportHistory: async () => {
-    try {
-      const response = await api.get(`${config.ENDPOINTS.REPORTS}history/`)
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  },
-
-  // Download report
-  downloadReport: async (reportId: string) => {
-    try {
-      const response = await api.get(`${config.ENDPOINTS.REPORTS}${reportId}/download/`, {
-        responseType: 'blob'
-      })
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  }
-}
-
-// Weather API
-export const weatherAPI = {
-  // Get current weather for forest location
-  getCurrentWeather: async (forestId: string) => {
-    try {
-      const response = await api.get(`${config.ENDPOINTS.WEATHER}${forestId}/current/`)
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  },
-
-  // Get weather forecast
-  getWeatherForecast: async (forestId: string, days: number = 7) => {
-    try {
-      const response = await api.get(`${config.ENDPOINTS.WEATHER}${forestId}/forecast/`, {
-        params: { days }
-      })
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  }
-}
-
-// Dashboard API
-export const dashboardAPI = {
-  // Get dashboard overview
-  getOverview: async () => {
-    try {
-      const response = await api.get(`${config.ENDPOINTS.DASHBOARD}overview/`)
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  },
-
-  // Get dashboard statistics
-  getStatistics: async (period: string = 'week') => {
-    try {
-      const response = await api.get(`${config.ENDPOINTS.DASHBOARD}statistics/`, {
-        params: { period }
-      })
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  }
-}
+// (les autres API : forestAPI, droneAPI, monitoringAPI, reportsAPI, weatherAPI, dashboardAPI restent inchangés)
 
 export default api

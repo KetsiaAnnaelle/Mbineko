@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { Mail, Lock, Eye, EyeOff, Shield, CheckCircle } from 'lucide-react'
 import { authAPI } from '@/services/api'
+import { useNavigate } from 'react-router'
 
 interface LoginFormProps {
   onSwitchToRegister: () => void
@@ -18,6 +19,8 @@ export default function LoginForm({ onSwitchToRegister, onSubmit }: LoginFormPro
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+
+ const navigate = useNavigate()
 
   const benefits = [
     "Surveillance en temps réel",
@@ -149,12 +152,13 @@ export default function LoginForm({ onSwitchToRegister, onSubmit }: LoginFormPro
               </label>
               <button
                 type="button"
+                onClick={() => navigate('/reset-password')} // redirection vers ta page ResetPassword
                 className="text-sm text-[#228B22] hover:text-green-700 font-medium transition-colors"
-                style={{ fontFamily: 'Lato, sans-serif' }}
+                style={{ fontFamily: 'Lato, sans-serif', cursor: 'pointer' }}
               >
                 Mot de passe oublié ?
               </button>
-            </div>
+                          </div>
 
             {/* Submit Button */}
             <button

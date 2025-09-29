@@ -356,9 +356,68 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Amélioration des transitions */
+/* Enhanced transitions and responsive utilities */
 * {
-  transition-property: color, background-color, border-color, transform, box-shadow;
+  transition-property: color, background-color, border-color, transform, box-shadow, opacity;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
+}
+
+/* Enhanced responsive utilities */
+@media (max-width: 640px) {
+  .title-xl {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+  .title-lg {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+}
+
+/* Enhanced scroll behavior */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+/* Enhanced focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid rgb(34, 139, 34);
+  outline-offset: 2px;
+}
+
+/* Enhanced selection styles */
+::selection {
+  background-color: rgba(34, 139, 34, 0.2);
+  color: rgb(34, 139, 34);
+}
+
+/* Enhanced loading states */
+.loading {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Enhanced hover effects for interactive elements */
+.interactive {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced glass morphism effects */
+.glass-enhanced {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Enhanced gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, rgb(34, 139, 34), rgb(16, 185, 129));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

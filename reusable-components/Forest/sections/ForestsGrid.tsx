@@ -1,7 +1,7 @@
 import ForestCard from "../cards/ForestCard";
 import type { Forest } from "@/types/forest";
 import { motion } from "framer-motion";
-import { TreePine } from "lucide-react";
+// import { TreePine } from "lucide-react";
 
 interface ForestsGridProps {
   forests: Forest[];

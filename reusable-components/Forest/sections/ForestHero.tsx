@@ -1,17 +1,11 @@
-// import React from 'react';
-import { MapPin, Thermometer, ArrowDown, Play, Shield, Mountain, Eye } from 'lucide-react';
+import { MapPin, Thermometer, Shield, Mountain } from 'lucide-react';
+import type { Forest } from '@/types/forest';
 
-// Mock data for demonstration
-const forest = {
-  name: "Forêt du Dja et Lobo",
-  location: "Cameroun",
-  area: "2 000 ha",
-  temperature: "25°C",
-  description: "Une réserve de biosphère exceptionnelle abritant une biodiversité remarquable au cœur de l'Afrique centrale.",
-  image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2560&q=80"
-};
+interface ForestHeroProps {
+  forest: Forest;
+}
 
-export default function ForestHero() {
+export default function ForestHero({ forest }: ForestHeroProps) {
   return (
     <section className="relative h-[75vh] overflow-hidden bg-gray-900">
       {/* Background Image with Overlay */}
@@ -42,10 +36,8 @@ export default function ForestHero() {
 
       {/* Main Content */}
       <div className="relative z-10 h-full flex flex-col">
-        {/* Top Navigation Space */}
         <div className="h-20" />
         
-        {/* Hero Content */}
         <div className="flex-1 flex items-center">
           <div className="container mx-auto px-6 lg:px-12">
             <div className="max-w-4xl">
@@ -85,63 +77,17 @@ export default function ForestHero() {
               <p className="text-xl text-gray-200 mb-12 max-w-2xl leading-relaxed">
                 {forest.description}
               </p>
-
-              {/* Action Buttons */}
-              {/* <div className="flex flex-col sm:flex-row gap-4 mb-5">
-                <button className="group relative overflow-hidden bg-[#228B22]  hover:bg-emerald-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-emerald-500/25">
-                  <div className="flex items-center justify-center gap-2">
-                    <Eye className="h-5 w-5 group-hover:scale-110 transition-transform" />
-                    <span>Explorer la forêt</span>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
-                </button>
-                
-                <button className="group border-2 border-white/30 bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-semibold text-lg backdrop-blur-sm transition-all duration-300 hover:scale-105">
-                  <div className="flex items-center justify-center gap-2">
-                    <Play className="h-5 w-5 group-hover:scale-110 transition-transform" />
-                    <span>Vidéo immersive</span>
-                  </div>
-                </button>
-              </div> */}
             </div>
           </div>
         </div>
-
-        {/* Bottom Stats Bar */}
-        {/* <div className="bg-black/50 backdrop-blur-md border-t border-white/10">
-          <div className="container mx-auto px-6 lg:px-12 py-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {[
-                { label: "Espèces protégées", value: "1,200+" },
-                { label: "Superficie totale", value: forest.area },
-                { label: "Années de protection", value: "45+" },
-                { label: "Visiteurs annuels", value: "25,000" }
-              ].map((stat, i) => (
-                <div key={i} className="text-center group">
-                  <div className="text-2xl font-bold text-[#228B22]  group-hover:scale-110 transition-transform">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-gray-300 mt-1">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div> */}
-
-        {/* Scroll Indicator */}
-        {/* <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-          <div className="flex flex-col items-center text-white/60">
-            <span className="text-xs mb-2 font-medium tracking-wider">DÉCOUVRIR</span>
-            <ArrowDown className="h-5 w-5 animate-bounce" />
-          </div>
-        </div> */}
       </div>
 
       {/* Decorative Elements */}
       <div className="absolute top-1/4 right-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-1/4 left-10 w-48 h-48 bg-teal-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+      <div
+        className="absolute bottom-1/4 left-10 w-48 h-48 bg-teal-500/5 rounded-full blur-3xl animate-pulse"
+        style={{ animationDelay: '1s' }}
+      />
     </section>
   );
 }

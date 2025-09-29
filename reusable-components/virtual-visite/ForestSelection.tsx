@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MapPin, Users, Camera, Navigation, Eye, Maximize2 } from 'lucide-react';
+import { MapPin, Users, Camera, Eye, Maximize2 } from 'lucide-react';
 
 const forests = [
   { 
