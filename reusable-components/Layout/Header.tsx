@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
-import { Moon, Sun, Globe, Menu, X, TreePine, Sparkles } from "lucide-react"
+import { Moon, Sun, Globe, Menu, X, TreePine } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useLanguage } from "@/components/language-provider"
 import { useTheme } from "@/components/theme-provider"
@@ -23,9 +23,10 @@ export default function Header() {
 
   const navItems = [
     { href: "/forests", label: t('nav.home', 'Accueil'), key: "#home" },
-    { href: "/Surveillance", label: t('nav.features', 'Surveillance'), key: "#Surveillance" },
-    { href: "/Cartographie", label: t('nav.about', 'Cartographie'), key: "#Cartographie" },
-    { href: "/visite", label: t('nav.contact', 'Visite Virtuelle'), key: "#center" },
+    // { href: "/Surveillance", label: t('nav.features', 'Surveillance'), key: "#Surveillance" },
+    // { href: "/Cartographie", label: t('nav.about', 'Cartographie'), key: "#Cartographie" },
+    { href: "/vitual-tour-viewer", label: t('nav.contact', 'Visite Virtuelle'), key: "#center" },
+    { href: "/dashboard", label: t('nav.about', 'Tableau de Bord'), key: "#dashboard" },
   ]
 
   return (
@@ -115,7 +116,7 @@ export default function Header() {
                 
 
                 {/* CTA Button */}
-                <Link to="/register"  >
+                {/* <Link to="/register"  >
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="hidden md:block">
                     <Button
                       className="gradient-primary text-white rounded-2xl px-6 py-2.5 font-semibold shadow-medium hover-lift transition-all duration-300 flex items-center gap-2"
@@ -125,7 +126,7 @@ export default function Header() {
                       S'INSCRIRE
                     </Button>
                   </motion.div>
-                </Link>
+                </Link> */}
 
               {/* User avatar */}
               {user && (
@@ -237,12 +238,12 @@ export default function Header() {
                 </Button>
               </div>
 
-              <Button
+              {/* <Button
                 className="w-full gradient-primary text-white rounded-2xl py-3 font-semibold shadow-medium hover-lift transition-all duration-300"
                 onClick={() => (window.location.href = "/register")}
               >
                 S'INSCRIRE
-              </Button>
+              </Button> */}
             </div>
           </aside>
         </motion.div>

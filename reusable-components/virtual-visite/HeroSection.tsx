@@ -1,68 +1,108 @@
-// import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Play, ArrowRight, Sparkles } from 'lucide-react';
+import { motion } from "framer-motion"
+import { Play, Compass, TreePine } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Link } from "react-router-dom"
 
-export default function Hero() {
+export default function HeroSection() {
   return (
-    <section className="relative min-h-[80vh] bg-gradient-to-br from-green-50 via-white to-green-50 overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-green-500 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-green-300 rounded-full blur-3xl"></div>
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 90, 0],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "linear",
+          }}
+          className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-green-200/30 to-transparent rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1.2, 1, 1.2],
+            rotate: [90, 0, 90],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "linear",
+          }}
+          className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-emerald-200/30 to-transparent rounded-full blur-3xl"
+        />
       </div>
-      
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
-        <div className="text-center max-w-5xl mx-auto">
-          {/* Badge */}
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-green-100 to-green-50 border border-green-200 rounded-full px-6 py-3 mb-8">
-            <Sparkles className="w-4 h-4 text-green-600" />
-            <span className="text-sm font-medium text-green-700">Technologie de pointe</span>
-          </div>
 
-          {/* Main Title */}
-          <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-8 leading-tight">
-            <span className="block">VISITE VIRTUELLE</span>
-            <span className="block bg-gradient-to-r from-green-600 via-green-500 to-green-700 bg-clip-text text-transparent">
-              DES FORÊTS
-            </span>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full mb-6"
+          >
+            <TreePine className="w-4 h-4" />
+            <span className="text-sm font-medium">Expérience Immersive 360°</span>
+          </motion.div>
+
+          <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+            Explorez les forêts du{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600">Congo</span>
           </h1>
 
-          {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-12">
-            Explorez nos forêts chez vous grâce à notre technologie de visite virtuelle immersive.
-            <br />
-            <span className="text-green-600 font-medium">Découvrez chaque recoin de ces écosystèmes exceptionnels.</span>
+          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+            Plongez dans une expérience de visite virtuelle unique et découvrez la beauté préservée de nos forêts
+            tropicales
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            <Button size="lg" className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group">
-              <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-              Commencer la visite
-            </Button>
-            <Button size="lg" variant="outline" className="border-2 border-green-200 hover:border-green-300 hover:bg-green-50 px-8 py-4 rounded-full transition-all duration-300 group">
-              En savoir plus
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white rounded-full px-8 py-6 text-lg">
+                <Play className="w-5 h-5 mr-2" />
+                Commencer la visite
+              </Button>
+            </motion.div>
+            <Link to="/carte">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="rounded-full px-8 py-6 text-lg border-green-200 hover:bg-green-50 bg-transparent"
+                >
+                  <Compass className="w-5 h-5 mr-2" />
+                  Explorer la carte
+                </Button>
+              </motion.div>
+            </Link>
           </div>
+        </motion.div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-green-600 mb-2">4+</div>
-              <div className="text-gray-600">Forêts disponibles</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-green-600 mb-2">360°</div>
-              <div className="text-gray-600">Vue immersive</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-green-600 mb-2">24/7</div>
-              <div className="text-gray-600">Accès libre</div>
-            </div>
-          </div>
-        </div>
+        {/* Floating stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
+        >
+          {[
+            { label: "Forêts disponibles", value: "4+" },
+            { label: "Vues panoramiques", value: "50+" },
+            { label: "Visiteurs actifs", value: "3" },
+          ].map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
+              className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg"
+            >
+              <div className="text-3xl font-bold text-green-600 mb-2">{stat.value}</div>
+              <div className="text-gray-600">{stat.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
-  );
+  )
 }

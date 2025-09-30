@@ -1,4 +1,3 @@
-// import React from 'react';
 import LineChart from '../../reusable-components/dashboard/LineChart';
 import BarChart from '../../reusable-components/dashboard/BarChart';
 import StatsCard from '../../reusable-components/dashboard/StatsCard';
@@ -12,7 +11,7 @@ function Dashboard() {
   const deforestationData = [10, 15, 25, 30, 45, 55, 70, 85, 90, 120];
   const forestEvolutionData = [45, 48, 52, 58, 62, 65, 68, 72, 75, 80];
   const riskZonesData = [20, 25, 30, 35, 28, 32, 40, 38, 35, 30];
-  
+
   const incidentData = [
     { label: 'Wildfire', value: 40, color: '#EF4444' },
     { label: 'Illegal Logging', value: 35, color: '#F97316' },
@@ -22,15 +21,14 @@ function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      
-      <div className="flex gap-6 p-6 mt-20">
+
+      <div className="flex flex-col lg:flex-row gap-6 p-6 mt-20">
         {/* Main Content */}
-        <div className="flex-1 mt-10">
-          {/* <MapSection /> */}
+        <div className="flex-1">
           <MapSection />
-          
+
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 mt-6">
             {/* Current Forest Cover */}
             <StatsCard title="Current Forest Cover">
               <div className="flex items-center justify-between">
@@ -44,15 +42,17 @@ function Dashboard() {
 
             {/* Deforested Area */}
             <StatsCard title="Deforested Area This M.">
-              <div className="text-center">
+              <div className="text-center w-full">
                 <div className="text-2xl font-bold text-gray-800 mb-2">120 ha</div>
-                <BarChart data={deforestationData} color="#10B981" />
+                <div className="w-full">
+                  <BarChart data={deforestationData} color="#10B981" />
+                </div>
               </div>
             </StatsCard>
 
             {/* Incidents by Type */}
             <StatsCard title="Incidents by Type">
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center w-full">
                 <DonutChart data={incidentData} />
               </div>
             </StatsCard>
@@ -61,7 +61,6 @@ function Dashboard() {
             <StatsCard title="AI Predictions">
               <div>
                 <div className="text-sm font-medium text-gray-700 mb-3">At Risk Zones</div>
-                {/* <LineChart data={[40, 35, 30, 25, 30, 35, 40]} color="#EF4444" height={60} /> */}
                 <div className="flex justify-between text-xs text-gray-500 mt-2">
                   <span>Current</span>
                   <span>Week</span>
@@ -76,8 +75,8 @@ function Dashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Forest Cover Evolution */}
             <StatsCard title="Forest Cover Evolution" className="lg:col-span-2">
-              <div className="h-32">
-                <LineChart data={forestEvolutionData} color="#10B981" height={80} />
+              <div className="h-40 w-full">
+                <LineChart data={forestEvolutionData} color="#10B981" height={120} />
                 <div className="flex justify-between text-xs text-gray-500 mt-2">
                   <span>2018</span>
                   <span>2019</span>
@@ -91,9 +90,11 @@ function Dashboard() {
             {/* At-Risk Zones & Remark */}
             <div className="space-y-6">
               <StatsCard title="At-Risk Zones">
-                <BarChart data={riskZonesData} color="#F59E0B" maxHeight={40} />
+                <div className="w-full">
+                  <BarChart data={riskZonesData} color="#F59E0B" maxHeight={40} />
+                </div>
               </StatsCard>
-              
+
               <StatsCard title="Remark">
                 <div className="text-sm text-gray-500 italic">
                   No remarks available
@@ -104,7 +105,7 @@ function Dashboard() {
         </div>
 
         {/* Alerts Panel */}
-        <div className="w-80 mt-10">
+        <div className="w-full lg:w-80 mt-6 lg:mt-10">
           <AlertsPanel />
         </div>
       </div>
@@ -113,4 +114,3 @@ function Dashboard() {
 }
 
 export default Dashboard;
-

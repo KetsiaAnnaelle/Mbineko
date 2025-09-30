@@ -18,10 +18,13 @@ import Cartography from './pages/Cartography';
 import VirtualTour from './pages/VirtualTour';
 import ProfileEdit from './pages/ProfileEdit';
 import ProfileDelete from './pages/ProfileDelete';
+import Carte from './pages/Carte';
+import VirtualTourViewerPage from './pages/VitualTourViewerPage';
 // import Cartography3D from './pages/Cartography3D';
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
+  // { path: "/dashboard", element: <Dashboard /> },
   { path: "/dashboard", element: (
     <ProtectedRoute>
       <Dashboard />
@@ -31,6 +34,9 @@ const router = createBrowserRouter([
   { path: "/login", element: <LoginPage /> },
   { path: "/reset-password", element: <ResetPasswordPage /> },
   { path: "/forests", element: <ForestMonitoringPage /> },
+  { path: "/vitual-viste", element: <VirtualVisite /> },
+  { path: "/vitual-tour-viewer", element: <VirtualTourViewerPage /> },
+  { path: "/carte", element: <Carte /> },
   { 
     path: "/forests/statistics", 
     element: <StatistiqueDetails 
