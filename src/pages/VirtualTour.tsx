@@ -1,88 +1,3 @@
-// import Header from '../../reusable-components/Layout/Header';
-// import Footer from '../../reusable-components/Layout/Footer';
-// import ErrorBoundary from '@/components/ErrorBoundary';
-// import { Suspense, useEffect, useState } from 'react';
-// import { Canvas } from '@react-three/fiber';
-// import { OrbitControls, Sphere, MeshDistortMaterial, useTexture } from '@react-three/drei';
-// import { getAvailableForestImages } from '@/services/imageSource';
-// import { motion } from 'framer-motion';
-
-// function EquirectSphere({ textureUrl }: { textureUrl: string }) {
-//   const map = useTexture(textureUrl);
-//   return (
-//     <Sphere args={[2.5, 64, 64]} scale={[-1, 1, 1]}>
-//       <MeshDistortMaterial map={map} distort={0.02} speed={1} roughness={1} metalness={0} />
-//     </Sphere>
-//   );
-// }
-
-// export default function VirtualTour() {
-//   const [images, setImages] = useState<string[]>([]);
-//   const [current, setCurrent] = useState(0);
-//   const [hotspots] = useState<{ position: [number, number, number], target: number }[]>([
-//     { position: [0.8, 0.3, -1.8], target: 1 },
-//     { position: [-1.2, -0.2, 1.6], target: 2 },
-//   ]);
-
-//   useEffect(() => {
-//     getAvailableForestImages().then(setImages);
-//   }, []);
-
-//   const next = () => setCurrent((c) => (images.length ? (c + 1) % images.length : 0));
-//   const prev = () => setCurrent((c) => (images.length ? (c - 1 + images.length) % images.length : 0));
-
-//   return (
-//     <div className="min-h-screen bg-white">
-//       <Header />
-//       <main className="max-w-screen-2xl mx-auto px-4 md:px-6 py-8 md:py-12">
-//         <motion.h1
-//           initial={{ opacity: 0, y: 10 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.6 }}
-//           className="text-3xl md:text-4xl font-bold mb-4 text-gray-900"
-//         >
-//           Visite virtuelle
-//         </motion.h1>
-//         <motion.p
-//           initial={{ opacity: 0, y: 8 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.6, delay: 0.1 }}
-//           className="text-gray-600 mb-6"
-//         >
-//           Immergez-vous dans vos panoramas et naviguez d'une scène à l'autre.
-//         </motion.p>
-//         <ErrorBoundary>
-//           <div className="w-full h-[60vh] rounded-2xl overflow-hidden shadow-xl border border-gray-100 relative">
-//             <Suspense fallback={<div className="w-full h-full grid place-items-center">Chargement…</div>}>
-//               <Canvas camera={{ position: [0, 0, 0.1], fov: 75 }}>
-//                 {/* Map equirectangular texture via MeshDistortMaterial mapUrl */}
-//                 {images.length > 0 && (
-//                   <EquirectSphere textureUrl={images[current]} />
-//                 )}
-//                 <OrbitControls enableZoom={false} enablePan={false} rotateSpeed={0.5} />
-//                 {/* Simple clickable hotspots */}
-//                 {images.length > 1 && hotspots.map((h, idx) => (
-//                   <mesh key={idx} position={h.position} onClick={() => setCurrent(h.target % images.length)}>
-//                     <sphereGeometry args={[0.04, 16, 16]} />
-//                     <meshBasicMaterial color="#22c55e" />
-//                   </mesh>
-//                 ))}
-//               </Canvas>
-//             </Suspense>
-//           <div className="absolute inset-x-0 bottom-4 flex items-center justify-center gap-4">
-//             <button onClick={prev} className="px-4 py-2 rounded-full bg-white/90 border border-gray-200 shadow hover:shadow-md transition">Précédent</button>
-//             <button onClick={next} className="px-4 py-2 rounded-full bg-green-600 text-white shadow hover:shadow-lg transition">Suivant</button>
-//           </div>
-//           </div>
-//         </ErrorBoundary>
-//       </main>
-//       <Footer />
-//     </div>
-//   );
-// }
-
-
-
 import Header from '../../reusable-components/Layout/Header';
 import Footer from '../../reusable-components/Layout/Footer';
 import ErrorBoundary from '../components/ErrorBoundary';
@@ -92,28 +7,44 @@ import { OrbitControls, Sphere, useTexture } from '@react-three/drei';
 import { getAvailableForestImages } from '../services/imageSource';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Pause, SkipForward, SkipBack, RotateCcw } from 'lucide-react';
+import * as THREE from 'three';
 
 // === Sphère panoramique animée ===
-function AnimatedEquirectSphere({ textureUrl, isPlaying }: { textureUrl: string, isPlaying: boolean }) {
+function AnimatedEquirectSphere({
+  textureUrl,
+  isPlaying,
+}: {
+  textureUrl: string;
+  isPlaying: boolean;
+}) {
   const map = useTexture(textureUrl);
-  const meshRef = useRef<any>();
+  const meshRef = useRef<THREE.Mesh | null>(null);
 
   useFrame((state) => {
     if (meshRef.current && isPlaying) {
       meshRef.current.rotation.y += 0.002;
-      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.05;
+      meshRef.current.rotation.x =
+        Math.sin(state.clock.elapsedTime * 0.3) * 0.05;
     }
   });
 
   return (
     <Sphere ref={meshRef} args={[2.5, 64, 64]} scale={[-1, 1, 1]}>
-      <meshBasicMaterial map={map} side={2} />
+      <meshBasicMaterial map={map} side={THREE.BackSide} />
     </Sphere>
   );
 }
 
 // === Barre de progression façon "vidéo" ===
-function VideoProgress({ current, total, onSeek }: { current: number, total: number, onSeek: (index: number) => void }) {
+function VideoProgress({
+  current,
+  total,
+  onSeek,
+}: {
+  current: number;
+  total: number;
+  onSeek: (index: number) => void;
+}) {
   return (
     <div className="w-full bg-white/20 rounded-full h-2 backdrop-blur-sm">
       <div
@@ -128,7 +59,9 @@ function VideoProgress({ current, total, onSeek }: { current: number, total: num
             key={i}
             onClick={() => onSeek(i)}
             className={`w-2 h-2 rounded-full transition-all ${
-              i === current ? 'bg-green-500 scale-125' : 'bg-white/50 hover:bg-white/80'
+              i === current
+                ? 'bg-green-500 scale-125'
+                : 'bg-white/50 hover:bg-white/80'
             }`}
           />
         ))}
@@ -143,7 +76,7 @@ export default function VirtualTour() {
   const [current, setCurrent] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [transitionKey, setTransitionKey] = useState(0);
-  const intervalRef = useRef<NodeJS.Timeout>();
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Charger les images dispo (locales ou S3)
   useEffect(() => {
@@ -204,7 +137,8 @@ export default function VirtualTour() {
             Visite Virtuelle Cinématique
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Laissez-vous emporter dans un voyage immersif à travers les forêts avec des transitions automatiques et des animations fluides.
+            Laissez-vous emporter dans un voyage immersif à travers les forêts
+            avec des transitions automatiques et des animations fluides.
           </p>
         </motion.div>
 
@@ -220,7 +154,9 @@ export default function VirtualTour() {
                 <div className="w-full h-full grid place-items-center bg-gradient-to-br from-green-900 to-emerald-900">
                   <div className="text-center text-white">
                     <div className="animate-spin w-12 h-12 border-4 border-white/30 border-t-white rounded-full mx-auto mb-4"></div>
-                    <p className="text-lg">Chargement de l'expérience immersive...</p>
+                    <p className="text-lg">
+                      Chargement de l'expérience immersive...
+                    </p>
                   </div>
                 </div>
               }
@@ -238,7 +174,10 @@ export default function VirtualTour() {
                     <ambientLight intensity={0.4} />
                     <directionalLight position={[1, 1, 1]} intensity={0.6} />
                     {images.length > 0 && (
-                      <AnimatedEquirectSphere textureUrl={images[current]} isPlaying={isPlaying} />
+                      <AnimatedEquirectSphere
+                        textureUrl={images[current]}
+                        isPlaying={isPlaying}
+                      />
                     )}
                     <OrbitControls
                       enableZoom={false}
@@ -257,7 +196,11 @@ export default function VirtualTour() {
               <div className="absolute bottom-0 left-0 right-0 p-6 pointer-events-auto">
                 <div className="bg-black/30 backdrop-blur-md rounded-2xl p-4 space-y-4">
                   {images.length > 0 && (
-                    <VideoProgress current={current} total={images.length} onSeek={seekTo} />
+                    <VideoProgress
+                      current={current}
+                      total={images.length}
+                      onSeek={seekTo}
+                    />
                   )}
                   <div className="flex items-center justify-center gap-4">
                     <motion.button
@@ -294,10 +237,20 @@ export default function VirtualTour() {
                     </motion.button>
                   </div>
                   <div className="text-center text-white/90">
-                    <p className="text-sm">Scène {current + 1} sur {images.length}</p>
+                    <p className="text-sm">
+                      Scène {current + 1} sur {images.length}
+                    </p>
                     <div className="flex items-center justify-center gap-2 mt-2">
-                      <div className={`w-2 h-2 rounded-full ${isPlaying ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`} />
-                      <span className="text-xs">{isPlaying ? 'Lecture automatique' : 'En pause'}</span>
+                      <div
+                        className={`w-2 h-2 rounded-full ${
+                          isPlaying
+                            ? 'bg-green-500 animate-pulse'
+                            : 'bg-gray-400'
+                        }`}
+                      />
+                      <span className="text-xs">
+                        {isPlaying ? 'Lecture automatique' : 'En pause'}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -313,11 +266,15 @@ export default function VirtualTour() {
           className="mt-8 text-center"
         >
           <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 max-w-2xl mx-auto">
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">Expérience Immersive</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              Expérience Immersive
+            </h3>
             <p className="text-gray-700 leading-relaxed">
-              Cette visite virtuelle vous transporte automatiquement à travers différents paysages forestiers.
-              Les transitions fluides et les animations continues créent une expérience cinématique unique.
-              Utilisez les contrôles pour naviguer à votre rythme ou laissez-vous guider par le mode automatique.
+              Cette visite virtuelle vous transporte automatiquement à travers
+              différents paysages forestiers. Les transitions fluides et les
+              animations continues créent une expérience cinématique unique.
+              Utilisez les contrôles pour naviguer à votre rythme ou laissez-vous
+              guider par le mode automatique.
             </p>
           </div>
         </motion.div>

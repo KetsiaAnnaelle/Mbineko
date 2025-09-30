@@ -4,27 +4,28 @@ import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Moon, Sun, Globe, Menu, X, TreePine, Sparkles } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useLanguage } from "@/components/language-provider"
+import { useTheme } from "@/components/theme-provider"
+import { useI18n } from "@/i18n"
+import { useAuth } from "@/hooks/useAuth"
 
 export default function Header() {
   const [open, setOpen] = useState(false)
   const [activeLink, setActiveLink] = useState("#home")
-  const [isDarkMode, setIsDarkMode] = useState(false)
-  const [currentLanguage, setCurrentLanguage] = useState("FR")
+  const { language: currentLanguage, setLanguage } = useLanguage()
+  const { theme, setTheme } = useTheme()
+  const isDarkMode = theme === 'dark'
+  const { t } = useI18n()
+  const { user, logout } = useAuth()
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode)
-    document.documentElement.classList.toggle("dark")
-  }
-
-  const changeLanguage = (lang: string) => {
-    setCurrentLanguage(lang)
-  }
+  const toggleDarkMode = () => setTheme(isDarkMode ? 'light' : 'dark')
+  const changeLanguage = (lang: string) => setLanguage(lang as 'FR' | 'EN')
 
   const navItems = [
-    { href: "/forests", label: "Accueil", key: "#home" },
-    { href: "/Surveillance", label: "Surveillance", key: "#Surveillance" },
-    { href: "/Cartographie", label: "Cartographie", key: "#Cartographie" },
-    { href: "/visite", label: "Visite Virtuelle", key: "#center" },
+    { href: "/forests", label: t('nav.home', 'Accueil'), key: "#home" },
+    { href: "/Surveillance", label: t('nav.features', 'Surveillance'), key: "#Surveillance" },
+    { href: "/Cartographie", label: t('nav.about', 'Cartographie'), key: "#Cartographie" },
+    { href: "/visite", label: t('nav.contact', 'Visite Virtuelle'), key: "#center" },
   ]
 
   return (
@@ -126,7 +127,23 @@ export default function Header() {
                   </motion.div>
                 </Link>
 
-                {/* Mobile menu button */}
+              {/* User avatar */}
+              {user && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="h-10 w-10 rounded-xl bg-green-600 text-white flex items-center justify-center font-semibold">
+                      {`${user.firstName?.[0] ?? ''}${user.lastName?.[0] ?? ''}`.toUpperCase()}
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-44">
+                    <DropdownMenuItem onClick={() => (window.location.href = '/profile/edit')}>Edit profile</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => (window.location.href = '/profile/delete')}>Delete profile</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => logout()}>Logout</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+
+              {/* Mobile menu button */}
                 <button
                   className="lg:hidden rounded-xl p-2.5 bg-white/10 border border-white/20 backdrop-blur-md hover:bg-white/20 text-white transition-all duration-300"
                   aria-label="menu"

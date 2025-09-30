@@ -13,7 +13,7 @@ export default function LoginPage() {
   useEffect(() => {
     // Redirect to home if already authenticated
     if (isAuthenticated && !isLoading) {
-      navigate('/home')
+      navigate('/')
     }
   }, [isAuthenticated, isLoading, navigate])
 
@@ -21,7 +21,7 @@ export default function LoginPage() {
     try {
       await login(data)
       alertSuccess('Connexion réussie', 'Bienvenue sur MBINEKO')
-      navigate('/home')
+      navigate('/')
     } catch (error: any) {
       const message = error?.response?.data?.message || error?.response?.data?.error || 'Échec de la connexion'
       alertError('Erreur', message)

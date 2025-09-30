@@ -10,12 +10,12 @@ export default function ResetPasswordPage() {
   const [step, setStep] = useState<'email' | 'code'>('email');
   const [isLoading, setIsLoading] = useState(false);
   const inputRefs = useRef<HTMLInputElement[]>([]);
-  
 
   // Étape 1 : envoi email
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) return Swal.fire('Erreur', 'Veuillez entrer votre email', 'error');
+    if (!email.trim())
+      return Swal.fire('Erreur', 'Veuillez entrer votre email', 'error');
 
     setIsLoading(true);
     try {
@@ -23,7 +23,11 @@ export default function ResetPasswordPage() {
       Swal.fire('Succès', 'Code envoyé à votre email', 'success');
       setStep('code');
     } catch (err: any) {
-      Swal.fire('Erreur', err.response?.data?.error || 'Impossible d’envoyer le code', 'error');
+      Swal.fire(
+        'Erreur',
+        err.response?.data?.error || 'Impossible d’envoyer le code',
+        'error'
+      );
     } finally {
       setIsLoading(false);
     }
@@ -33,25 +37,41 @@ export default function ResetPasswordPage() {
   const handleResetSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const codeValue = code.join('');
-    if (codeValue.length !== 4) return Swal.fire('Erreur', 'Veuillez saisir le code à 4 chiffres', 'error');
-    if (!newPassword.trim()) return Swal.fire('Erreur', 'Veuillez saisir un nouveau mot de passe', 'error');
+    if (codeValue.length !== 4)
+      return Swal.fire(
+        'Erreur',
+        'Veuillez saisir le code à 4 chiffres',
+        'error'
+      );
+    if (!newPassword.trim())
+      return Swal.fire(
+        'Erreur',
+        'Veuillez saisir un nouveau mot de passe',
+        'error'
+      );
 
     setIsLoading(true);
     try {
-        // const cleanedPassword = newPassword.trim();
-      console.log({ email: email.trim().toLowerCase(), code: codeValue, new_password: newPassword });
       await authAPI.resetPasswordConfirm(
         email.trim().toLowerCase(),
         codeValue,
         newPassword.trim()
       );
-      Swal.fire('Succès', 'Mot de passe réinitialisé avec succès', 'success');
+      Swal.fire(
+        'Succès',
+        'Mot de passe réinitialisé avec succès',
+        'success'
+      );
       setStep('email');
       setCode(['', '', '', '']);
       setNewPassword('');
       setEmail('');
     } catch (err: any) {
-      Swal.fire('Erreur', err.response?.data?.error || 'Code invalide ou expiré', 'error');
+      Swal.fire(
+        'Erreur',
+        err.response?.data?.error || 'Code invalide ou expiré',
+        'error'
+      );
     } finally {
       setIsLoading(false);
     }
@@ -66,12 +86,12 @@ export default function ResetPasswordPage() {
 
       // autofocus sur le prochain champ
       if (value && index < inputRefs.current.length - 1) {
-        inputRefs.current[index + 1].focus();
+        inputRefs.current[index + 1]?.focus();
       }
 
       // backspace -> focus précédent
       if (!value && index > 0) {
-        inputRefs.current[index - 1].focus();
+        inputRefs.current[index - 1]?.focus();
       }
     }
   };
@@ -81,7 +101,9 @@ export default function ResetPasswordPage() {
       {step === 'email' ? (
         <form onSubmit={handleEmailSubmit} className="space-y-6">
           <h2 className="text-xl font-bold">Mot de passe oublié</h2>
-          <p className="text-gray-600">Entrez votre email pour recevoir un code</p>
+          <p className="text-gray-600">
+            Entrez votre email pour recevoir un code
+          </p>
           <input
             type="email"
             placeholder="Votre email"
@@ -100,7 +122,9 @@ export default function ResetPasswordPage() {
       ) : (
         <form onSubmit={handleResetSubmit} className="space-y-6">
           <h2 className="text-xl font-bold">Réinitialisation</h2>
-          <p className="text-gray-600">Saisissez le code reçu par email et votre nouveau mot de passe</p>
+          <p className="text-gray-600">
+            Saisissez le code reçu par email et votre nouveau mot de passe
+          </p>
 
           <div className="flex justify-between gap-2">
             {code.map((digit, index) => (
@@ -109,7 +133,9 @@ export default function ResetPasswordPage() {
                 type="text"
                 maxLength={1}
                 value={digit}
-                ref={(el) => el && (inputRefs.current[index] = el)}
+                ref={(el) => {
+                  if (el) inputRefs.current[index] = el;
+                }}
                 onChange={(e) => handleCodeChange(e.target.value, index)}
                 className="w-14 h-14 border-2 border-gray-300 text-center text-xl rounded-lg focus:border-green-600 focus:ring-2 focus:ring-green-600"
               />

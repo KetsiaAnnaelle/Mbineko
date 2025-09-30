@@ -10,15 +10,23 @@ import ForestMonitoringPage from './pages/ForestMonitoringPage';
 import VirtualVisite from './pages/VirtualVisite';
 import StatistiqueDetails from './pages/StatistiqueDetails';
 import { ThemeProvider } from "@/components/theme-provider"
+import { LanguageProvider } from '@/components/language-provider'
+import ProtectedRoute from '@/components/ProtectedRoute'
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import ThreeDVisualization from './pages/ThreeDVisualization';
 import Cartography from './pages/Cartography';
 import VirtualTour from './pages/VirtualTour';
-import Cartography3D from './pages/Cartography3D';
+import ProfileEdit from './pages/ProfileEdit';
+import ProfileDelete from './pages/ProfileDelete';
+// import Cartography3D from './pages/Cartography3D';
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
-  { path: "/dashboard", element: <Dashboard /> },
+  { path: "/dashboard", element: (
+    <ProtectedRoute>
+      <Dashboard />
+    </ProtectedRoute>
+  ) },
   { path: "/register", element: <RegisterPage /> },
   { path: "/login", element: <LoginPage /> },
   { path: "/reset-password", element: <ResetPasswordPage /> },
@@ -47,18 +55,38 @@ const router = createBrowserRouter([
     /> 
   },
   { path: "/visite", element: <VirtualVisite /> },
-  { path: "/visualization-3d", element: <ThreeDVisualization /> },
-  { path: "/cartographie", element: <Cartography /> },
+  { path: "/visualization-3d", element: (
+    <ProtectedRoute>
+      <ThreeDVisualization />
+    </ProtectedRoute>
+  ) },
+  { path: "/cartographie", element: (
+    <ProtectedRoute>
+      <Cartography />
+    </ProtectedRoute>
+  ) },
   { path: "/virtual-tour", element: <VirtualTour /> },
-  { path: "/cartography-3d", element: <Cartography3D /> },
+  { path: "/profile/edit", element: (
+    <ProtectedRoute>
+      <ProfileEdit />
+    </ProtectedRoute>
+  ) },
+  { path: "/profile/delete", element: (
+    <ProtectedRoute>
+      <ProfileDelete />
+    </ProtectedRoute>
+  ) },
+  // { path: "/cartography-3d", element: <Cartography3D /> },
 ]);
 
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
+      <LanguageProvider>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </LanguageProvider>
     </ThemeProvider>
   )
 }

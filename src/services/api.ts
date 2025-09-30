@@ -45,7 +45,7 @@ export const authAPI = {
       if (response.data.token) {
         localStorage.setItem('authToken', response.data.token)
         localStorage.setItem('user', JSON.stringify(response.data.user))
-        alertSuccess('Connexion réussie', 'Bienvenue 🎉')
+        alertSuccess('Connexion réussie', 'Bienvenue !!!')
       }
       return response.data
     } catch (error: any) {

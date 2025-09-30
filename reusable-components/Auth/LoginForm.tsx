@@ -50,7 +50,7 @@ export default function LoginForm({ onSwitchToRegister, onSubmit }: LoginFormPro
   }
 
   return (
-    <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-12 border border-gray-100">
+    <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-12 border border-gray-100" style={{ fontFamily: 'Lato, sans-serif' }}>
       {/* Header */}
       <div className="text-center mb-8">
         <img src="assets/img/logo.png" alt="MBINEKO logo" className="h-25 w-auto mx-auto mb-3" />
@@ -171,7 +171,7 @@ export default function LoginForm({ onSwitchToRegister, onSubmit }: LoginFormPro
             </button>
 
             {/* Divider */}
-            <div className="relative my-6">
+            {/* <div className="relative my-6">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-200"></div>
               </div>
@@ -180,21 +180,21 @@ export default function LoginForm({ onSwitchToRegister, onSubmit }: LoginFormPro
                   ou
                 </span>
               </div>
-            </div>
+            </div> */}
 
             {/* Social Login */}
-            <button
+            {/* <button
               type="button"
               className="w-full border-2 border-gray-200 text-gray-700 py-3 px-6 rounded-xl font-medium hover:border-[#228B22] hover:text-[#228B22] transition-all duration-200 flex items-center justify-center space-x-2"
               style={{ fontFamily: 'Lato, sans-serif' }}
             >
               <Shield className="h-5 w-5" />
               <span>Continuer avec Google</span>
-            </button>
+            </button> */}
 
             {/* Switch to Register */}
-            <div className="text-center pt-4">
-              <p className="text-gray-600" style={{ fontFamily: 'Lato, sans-serif' }}>
+            <div className="text-center pt-4" style={{ fontFamily: 'Lato, sans-serif' }}>
+              <p className="text-gray-600" >
                 Pas encore de compte ?{' '}
                 <button
                   type="button"

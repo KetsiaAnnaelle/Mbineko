@@ -149,7 +149,7 @@ const MobileAppSection = () => {
                 initial={{ scale: 0, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 0.3 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1.5, delay: 0.7 }}
+                // transition={{ duration: 1.5, delay: 0.7 }}
                 animate={{
                   scale: [1, 1.2, 1],
                   opacity: [0.3, 0.5, 0.3],
@@ -157,7 +157,8 @@ const MobileAppSection = () => {
                 transition={{
                   duration: 4,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  ease: "easeInOut",
+                  delay: 0.7
                 }}
                 className="absolute -top-16 -left-16 w-48 h-48 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full blur-3xl"
               ></motion.div>
@@ -166,19 +167,18 @@ const MobileAppSection = () => {
                 initial={{ scale: 0, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 0.2 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1.5, delay: 0.9 }}
                 animate={{
                   scale: [1, 1.1, 1],
                   opacity: [0.2, 0.4, 0.2],
                 }}
                 transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 2
+                  scale: { duration: 5, repeat: Infinity, ease: "easeInOut" },
+                  opacity: { duration: 5, repeat: Infinity, ease: "easeInOut" },
+                  delay: 0.9, // tu peux garder celui que tu veux (0.9 ou 2)
                 }}
                 className="absolute -bottom-12 -right-12 w-40 h-40 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full blur-3xl"
-              ></motion.div>
+              />
+
 
               {/* Floating UI badges */}
               <motion.div

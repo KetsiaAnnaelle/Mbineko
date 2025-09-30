@@ -10,78 +10,49 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Link } from 'react-scroll';
+import { useLanguage } from '@/components/language-provider';
+import { useTheme } from '@/components/theme-provider';
+import { useI18n } from '@/i18n';
+import { useAuth } from '@/hooks/useAuth';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [activeLink, setActiveLink] = useState('home');
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState<'FR' | 'EN'>('FR');
+  const { language: currentLanguage, setLanguage } = useLanguage();
+  const { theme, setTheme } = useTheme();
+  const isDarkMode = theme === 'dark';
+  const { user, logout } = useAuth();
 
-  // Textes multilingues
-  const translations = {
-    FR: {
-      navLinks: [
-        { id: "home", label: "Accueil" },
-        { id: "features", label: "Fonctionnalités" },
-        { id: "impacts", label: "Impacts" },
-        { id: "team", label: "Équipes & partenaires" },
-        { id: "about", label: "À propos" },
-        { id: "contact", label: "Contact" },
-      ],
-      register: "S’INSCRIRE",
-      menu: "Menu",
-    },
-    EN: {
-      navLinks: [
-        { id: "home", label: "Home" },
-        { id: "features", label: "Features" },
-        { id: "impacts", label: "Impacts" },
-        { id: "team", label: "Team & Partners" },
-        { id: "about", label: "About" },
-        { id: "contact", label: "Contact" },
-      ],
-      register: "REGISTER",
-      menu: "Menu",
-    },
-  };
+  // i18n handled by useI18n
 
   // Appliquer le thème au chargement
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "dark") {
-      setIsDarkMode(true);
-      document.documentElement.classList.add("dark");
-    }
+    // Nothing here; theme comes from ThemeProvider
   }, []);
 
   // Basculer Dark Mode
-  const toggleDarkMode = () => {
-    const newMode = !isDarkMode;
-    setIsDarkMode(newMode);
-    if (newMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  };
+  const toggleDarkMode = () => setTheme(isDarkMode ? 'light' : 'dark');
 
   // Changer la langue
-  const changeLanguage = (lang: 'FR' | 'EN') => {
-    setCurrentLanguage(lang);
-    localStorage.setItem("lang", lang);
-  };
+  const changeLanguage = (lang: 'FR' | 'EN') => setLanguage(lang);
 
   // Charger la langue au démarrage
   useEffect(() => {
-    const storedLang = localStorage.getItem("lang");
-    if (storedLang === "EN" || storedLang === "FR") {
-      setCurrentLanguage(storedLang);
-    }
+    // language is managed by LanguageProvider
   }, []);
 
-  const { navLinks, register, menu } = translations[currentLanguage];
+  type NavLink = { id: string; label: string }
+  const { t } = useI18n();
+  const navLinks: NavLink[] = [
+    { id: 'home', label: t('nav.home') },
+    { id: 'features', label: t('nav.features') },
+    { id: 'impacts', label: t('nav.impacts') },
+    { id: 'team', label: t('nav.team') },
+    { id: 'about', label: t('nav.about') },
+    { id: 'contact', label: t('nav.contact') },
+  ];
+  const register = t('cta.register');
+  const menu = t('ui.menu');
 
   return (
     <header
@@ -112,7 +83,7 @@ const Navbar = () => {
           {/* Navigation desktop */}
           <nav className="hidden md:flex items-center flex-1 justify-center mx-8">
             <div className="flex items-center gap-1 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-md py-2 px-6 shadow-md">
-              {navLinks.map((link) => (
+              {navLinks.map((link: NavLink) => (
                 <Link
                   key={link.id}
                   to={link.id}
@@ -155,6 +126,22 @@ const Navbar = () => {
             >
               {isDarkMode ? <Sun className="h-4 w-4 text-yellow-400" /> : <Moon className="h-4 w-4 text-white" />}
             </Button>
+
+          {/* User avatar */}
+          {user && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="h-9 w-9 rounded-full bg-green-600 text-white flex items-center justify-center font-semibold">
+                  {`${user.firstName?.[0] ?? ''}${user.lastName?.[0] ?? ''}`.toUpperCase()}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-44">
+                <DropdownMenuItem onClick={() => (window.location.href = '/profile/edit')}>Edit profile</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => (window.location.href = '/profile/delete')}>Delete profile</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => logout()}>Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
 
             {/* CTA */}
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="hidden md:block">
@@ -206,7 +193,7 @@ const Navbar = () => {
 
               {/* Liens mobile */}
               <div className="space-y-2">
-                {navLinks.map((link) => (
+                {navLinks.map((link: NavLink) => (
                   <Link
                     key={link.id}
                     to={link.id}
